@@ -31,6 +31,8 @@ public class CharachterListFragment extends Fragment
     @BindView(R.id.characterList)
     RecyclerView characterView;
 
+    private CharacterAdapter adapter;
+
     public CharachterListFragment()
     {
         // Required empty public constructor
@@ -46,12 +48,24 @@ public class CharachterListFragment extends Fragment
         View v = inflater.inflate(R.layout.fragment_charachter_list, container, false);
         unbinder = ButterKnife.bind(this,v);
         characterView.setLayoutManager(new LinearLayoutManager(getContext()));
-        viewModel = ViewModelProviders.of(this).get(CharacterListViewModel.class);
-        CharacterAdapter adapter = new CharacterAdapter(viewModel.getCharacters());
+        CharacterListViewModel.Factory viewModelFactory = new CharacterListViewModel.Factory(getActivity().getApplication());
+        viewModel = ViewModelProviders.of(this,viewModelFactory).get(CharacterListViewModel.class);
+        adapter = new CharacterAdapter();
         characterView.setAdapter(adapter);
+        observeUI();
         return v;
     }
 
+    private void observeUI()
+    {
+        viewModel.getCharacters().observe(this, characters -> {
+            if(characters != null)
+            {
+                adapter.setValues(characters);
+
+            }
+        });
+    }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {

@@ -1,6 +1,8 @@
 package be.thomasdewulf.whoisit.database;
 
 import android.os.AsyncTask;
+import android.util.Log;
+
 import be.thomasdewulf.whoisit.models.Character;
 
 /**
@@ -10,6 +12,7 @@ import be.thomasdewulf.whoisit.models.Character;
 
 public class Initializer
 {
+    private static final String TAG = "Initializer";
     public static void populateDbAsync(AppDatabase db)
     {
         PopulateTask task = new PopulateTask(db);
@@ -21,6 +24,7 @@ public class Initializer
         Character character1 = new Character("Test 1","Test Description");
         Character character2 = new Character("Vic","Dude with headphones");
         db.characterDao().insertCharacters(character1,character2);
+        Log.i(TAG, "Inserted some categories");
     }
 
 

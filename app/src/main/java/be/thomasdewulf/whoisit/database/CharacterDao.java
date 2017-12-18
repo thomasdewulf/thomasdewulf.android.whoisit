@@ -1,5 +1,6 @@
 package be.thomasdewulf.whoisit.database;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -20,7 +21,7 @@ public interface CharacterDao
 {
 
     @Query("SELECT * FROM characters")
-    List<Character> getAll();
+    LiveData<List<Character>> getAll();
 
     @Query("SELECT * FROM characters WHERE name LIKE :name LIMIT 1")
     Character findByName(String name);

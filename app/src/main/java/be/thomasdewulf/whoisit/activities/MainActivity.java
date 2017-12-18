@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
             CharachterListFragment listFragment = new CharachterListFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.fragment_container, listFragment, CharachterListFragment.TAG)
+                    .replace(R.id.fragment_container, listFragment, CharachterListFragment.TAG)
                     .commit();
         }
     }

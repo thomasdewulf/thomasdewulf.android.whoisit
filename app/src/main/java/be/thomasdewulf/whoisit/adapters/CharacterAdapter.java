@@ -19,11 +19,12 @@ import be.thomasdewulf.whoisit.models.Character;
 
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder>
 {
+    private final static String TAG = "CharacterAdapter";
     private List<Character> characters;
 
-    public CharacterAdapter(List<Character> characters)
+    public CharacterAdapter()
     {
-        this.characters = characters;
+
     }
 
     @Override
@@ -42,9 +43,15 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder>
         holder.setData(characters.get(position));
     }
 
+    public void setValues(List<Character> characters)
+    {
+        this.characters = characters;
+        notifyDataSetChanged();
+
+    }
     @Override
     public int getItemCount()
     {
-        return characters.size();
+        return characters == null? 0: characters.size();
     }
 }

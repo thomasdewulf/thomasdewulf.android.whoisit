@@ -8,6 +8,7 @@ import android.widget.TextView;
 import be.thomasdewulf.whoisit.R;
 import be.thomasdewulf.whoisit.models.Character;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * WhoIsIt
@@ -26,6 +27,7 @@ public class CharacterViewHolder extends RecyclerView.ViewHolder
     public CharacterViewHolder(View itemView)
     {
         super(itemView);
+        ButterKnife.bind(this,itemView);
     }
 
     public void setData(Character character)
