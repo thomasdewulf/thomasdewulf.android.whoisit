@@ -17,6 +17,12 @@ public class Character
     {
     }
 
+    public Character(String name, String description)
+    {
+        this.name = name;
+        this.description = description;
+    }
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int id;

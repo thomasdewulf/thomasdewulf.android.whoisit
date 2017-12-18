@@ -33,4 +33,7 @@ public interface CharacterDao
 
     @Delete
     void deleteCharachters(Character... characters);
+
+    @Query("DELETE FROM characters")
+    void nukeTable();
 }
