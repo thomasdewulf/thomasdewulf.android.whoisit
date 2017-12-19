@@ -9,6 +9,8 @@ import be.thomasdewulf.whoisit.models.Character;
 /**
  * WhoIsIt
  * Created by thomasdewulf on 18/12/17.
+ * Repository class. Single point of truth voor de app
+ * Ook een singleton.
  */
 
 public class DataRepository

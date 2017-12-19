@@ -28,6 +28,8 @@ public abstract class AppDatabase extends RoomDatabase
 
     private final MutableLiveData<Boolean> isDatabaseCreated = new MutableLiveData<>();
 
+    /**
+     * Singleton van de Room database. */
     public static AppDatabase getInstance(final Context context)
     {
         if(instance == null)
@@ -45,6 +47,8 @@ public abstract class AppDatabase extends RoomDatabase
         return instance;
     }
 
+    /**
+     * Builden van de database. Bij migrations wordt alle data verwijderd en wordt de db opnieuw aangemaakt.*/
     private static AppDatabase buildDatabase(final Context appContext)
     {
         return Room.databaseBuilder(appContext, AppDatabase.class,DATABASE_NAME).addCallback(new Callback()

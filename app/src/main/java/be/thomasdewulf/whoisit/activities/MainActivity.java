@@ -10,6 +10,8 @@ import be.thomasdewulf.whoisit.R;
 import be.thomasdewulf.whoisit.database.AppDatabase;
 import be.thomasdewulf.whoisit.database.Initializer;
 import be.thomasdewulf.whoisit.fragments.CharachterListFragment;
+import be.thomasdewulf.whoisit.fragments.DetailFragment;
+import be.thomasdewulf.whoisit.models.Character;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity
             CharachterListFragment listFragment = new CharachterListFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, listFragment, CharachterListFragment.TAG)
+                    .add(R.id.fragment_container, listFragment, CharachterListFragment.TAG)
                     .commit();
         }
     }
@@ -74,6 +76,11 @@ public class MainActivity extends AppCompatActivity
      */
     public void show(Character character)
     {
-        //TODO: implement
+        DetailFragment detailFragment = DetailFragment.forCharachter(character.getId());
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack("character")
+                .replace(R.id.fragment_container,detailFragment,null)
+                .commit();
     }
 }

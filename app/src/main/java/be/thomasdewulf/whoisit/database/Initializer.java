@@ -8,6 +8,7 @@ import be.thomasdewulf.whoisit.models.Character;
 /**
  * WhoIsIt
  * Created by thomasdewulf on 18/12/17.
+ * Initialize klasse. Gebruikt wanneer de app voor de allereerste keer opstart.
  */
 
 public class Initializer

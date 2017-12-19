@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="character"
+            type="be.thomasdewulf.whoisit.models.Character"/>
+        <variable
+            name="callback"
+            type="be.thomasdewulf.whoisit.ui.CharacterClickCallback"/>
+    </data>
+<android.support.constraint.ConstraintLayout
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:layout_editor_absoluteY="81dp">
+    tools:layout_editor_absoluteY="81dp"
+    android:onClick="@{() -> callback.onClick(character)}">
 
     <ImageView
         android:id="@+id/characterImage"
@@ -25,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="@{character.name}"
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/characterImage"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -37,8 +48,9 @@
         android:layout_marginBottom="12dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:text="@{character.description}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/characterImage"
         app:layout_constraintTop_toBottomOf="@+id/characterName"/>
 </android.support.constraint.ConstraintLayout>
+</layout>
