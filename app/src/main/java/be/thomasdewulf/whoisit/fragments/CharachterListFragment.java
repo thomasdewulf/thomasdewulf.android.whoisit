@@ -18,6 +18,7 @@ import be.thomasdewulf.whoisit.databinding.FragmentCharachterListBinding;
 import be.thomasdewulf.whoisit.models.Character;
 import be.thomasdewulf.whoisit.ui.CharacterClickCallback;
 import be.thomasdewulf.whoisit.ui.viewmodel.CharacterListViewModel;
+import be.thomasdewulf.whoisit.ui.viewmodel.SharedViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,6 +78,8 @@ public class CharachterListFragment extends Fragment
       public void onClick(Character character)
       {
           if(getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)){
+              SharedViewModel viewmodel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+              viewmodel.select(character);
               ( (MainActivity)  getActivity()).show(character);
           }
       }
