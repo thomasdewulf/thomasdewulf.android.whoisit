@@ -14,6 +14,7 @@ import be.thomasdewulf.whoisit.models.Character;
 public class Initializer
 {
     private static final String TAG = "Initializer";
+
     public static void populateDbAsync(AppDatabase db)
     {
         PopulateTask task = new PopulateTask(db);
@@ -22,16 +23,16 @@ public class Initializer
 
     private static void populateDb(AppDatabase db)
     {
-        Character character1 = new Character("Test 1","Test Description");
-        Character character2 = new Character("Vic","Dude with headphones");
-        db.characterDao().insertCharacters(character1,character2);
+        Character character1 = new Character("Test 1", "Test Description");
+        Character character2 = new Character("Vic", "Dude with headphones");
+        db.characterDao().insertCharacters(character1, character2);
         Log.i(TAG, "Inserted some categories");
     }
 
 
     private static class PopulateTask extends AsyncTask<Void, Void, Void>
     {
-private final AppDatabase db;
+        private final AppDatabase db;
 
         public PopulateTask(AppDatabase db)
         {

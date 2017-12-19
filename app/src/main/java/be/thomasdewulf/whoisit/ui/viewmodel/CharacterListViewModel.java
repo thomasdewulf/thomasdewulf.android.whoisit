@@ -24,7 +24,6 @@ public class CharacterListViewModel extends AndroidViewModel
     private DataRepository dataRepository;
 
 
-
     private MediatorLiveData<List<Character>> characters;
 
 
@@ -41,33 +40,35 @@ public class CharacterListViewModel extends AndroidViewModel
     public MediatorLiveData<List<Character>> getCharacters()
     {
 
-      return characters;
+        return characters;
     }
 
     private void loadCharacters()
     {
         LiveData<List<Character>> charactersLive = dataRepository.getCharacters();
-        characters.addSource(charactersLive,characters::setValue);
+        characters.addSource(charactersLive, characters::setValue);
     }
 
 
-
-
-    /**Custom factory is nodig. Android slaagt er anders niet in om een instantie van het viewmodel aan te maken**/
-    public static class Factory extends ViewModelProvider.NewInstanceFactory {
+    /**
+     * Custom factory is nodig. Android slaagt er anders niet in om een instantie van het viewmodel aan te maken
+     **/
+    public static class Factory extends ViewModelProvider.NewInstanceFactory
+    {
 
         @NonNull
         private final Application mApplication;
 
 
-
-        public Factory(@NonNull Application application) {
+        public Factory(@NonNull Application application)
+        {
             mApplication = application;
 
         }
 
         @Override
-        public <T extends ViewModel> T create(java.lang.Class<T> modelClass) {
+        public <T extends ViewModel> T create(java.lang.Class<T> modelClass)
+        {
             //noinspection unchecked
             return (T) new CharacterListViewModel(mApplication);
         }

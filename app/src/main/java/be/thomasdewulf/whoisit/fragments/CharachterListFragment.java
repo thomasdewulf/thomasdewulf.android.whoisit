@@ -26,16 +26,28 @@ import be.thomasdewulf.whoisit.ui.viewmodel.SharedViewModel;
 public class CharachterListFragment extends Fragment
 {
     public static final String TAG = "CharacterListFragment";
+    private final CharacterClickCallback characterClickCallback = new CharacterClickCallback()
+    {
+        @Override
+        public void onClick(Character character)
+        {
+            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED))
+            {
+                SharedViewModel viewmodel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+                viewmodel.select(character);
+                ((MainActivity) getActivity()).show(character);
+            }
+        }
+    };
     private CharacterListViewModel viewModel;
-
     private CharacterAdapter adapter;
     private FragmentCharachterListBinding binding;
+
 
     public CharachterListFragment()
     {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +56,7 @@ public class CharachterListFragment extends Fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_charachter_list, container, false);
         //Recyclerview
         adapter = new CharacterAdapter(characterClickCallback);
-       binding.characterList.setAdapter(adapter);
+        binding.characterList.setAdapter(adapter);
 
         return binding.getRoot();
     }
@@ -52,8 +64,9 @@ public class CharachterListFragment extends Fragment
     private void observeUI()
     {
         //Observeren van karakters in viewmodel. Recyclerview adapter waarden doorgeven wanneer ze geupdatet worden.
-        viewModel.getCharacters().observe(this, characters -> {
-            if(characters != null)
+        viewModel.getCharacters().observe(this, characters ->
+        {
+            if (characters != null)
             {
                 adapter.setValues(characters);
 
@@ -61,27 +74,15 @@ public class CharachterListFragment extends Fragment
             binding.executePendingBindings();
         });
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
         //Viewmodel ophalen
         CharacterListViewModel.Factory viewModelFactory = new CharacterListViewModel.Factory(getActivity().getApplication());
-        viewModel = ViewModelProviders.of(this,viewModelFactory).get(CharacterListViewModel.class);
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(CharacterListViewModel.class);
         observeUI();
 
     }
-
-  private final CharacterClickCallback characterClickCallback = new CharacterClickCallback()
-  {
-      @Override
-      public void onClick(Character character)
-      {
-          if(getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)){
-              SharedViewModel viewmodel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
-              viewmodel.select(character);
-              ( (MainActivity)  getActivity()).show(character);
-          }
-      }
-  };
 }

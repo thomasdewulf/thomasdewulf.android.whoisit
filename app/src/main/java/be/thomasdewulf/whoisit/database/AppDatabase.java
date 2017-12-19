@@ -20,23 +20,20 @@ import be.thomasdewulf.whoisit.models.Character;
 public abstract class AppDatabase extends RoomDatabase
 {
 
-    public abstract CharacterDao characterDao();
-
-    private static AppDatabase instance;
-
     public static final String DATABASE_NAME = "whoIsIt-database";
-
+    private static AppDatabase instance;
     private final MutableLiveData<Boolean> isDatabaseCreated = new MutableLiveData<>();
 
     /**
-     * Singleton van de Room database. */
+     * Singleton van de Room database.
+     */
     public static AppDatabase getInstance(final Context context)
     {
-        if(instance == null)
+        if (instance == null)
         {
             synchronized (AppDatabase.class)
             {
-                if(instance == null)
+                if (instance == null)
                 {
                     instance = buildDatabase(context.getApplicationContext());
                     instance.updateDatabaseCreated(context.getApplicationContext());
@@ -48,10 +45,11 @@ public abstract class AppDatabase extends RoomDatabase
     }
 
     /**
-     * Builden van de database. Bij migrations wordt alle data verwijderd en wordt de db opnieuw aangemaakt.*/
+     * Builden van de database. Bij migrations wordt alle data verwijderd en wordt de db opnieuw aangemaakt.
+     */
     private static AppDatabase buildDatabase(final Context appContext)
     {
-        return Room.databaseBuilder(appContext, AppDatabase.class,DATABASE_NAME).addCallback(new Callback()
+        return Room.databaseBuilder(appContext, AppDatabase.class, DATABASE_NAME).addCallback(new Callback()
         {
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db)
@@ -64,9 +62,11 @@ public abstract class AppDatabase extends RoomDatabase
 
     }
 
+    public abstract CharacterDao characterDao();
+
     private void updateDatabaseCreated(final Context context)
     {
-        if(context.getDatabasePath(DATABASE_NAME).exists())
+        if (context.getDatabasePath(DATABASE_NAME).exists())
         {
             setDatabaseCreated();
         }
@@ -79,5 +79,8 @@ public abstract class AppDatabase extends RoomDatabase
         isDatabaseCreated.postValue(true);
     }
 
-    public LiveData<Boolean> getDatabaseCreated() {return isDatabaseCreated;}
+    public LiveData<Boolean> getDatabaseCreated()
+    {
+        return isDatabaseCreated;
+    }
 }

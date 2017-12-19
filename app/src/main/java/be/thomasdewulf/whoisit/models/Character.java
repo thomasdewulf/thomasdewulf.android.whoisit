@@ -13,6 +13,14 @@ import android.arch.persistence.room.PrimaryKey;
 public class Character
 {
 
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private int id;
+    @ColumnInfo(name = "name")
+    private String name;
+    @ColumnInfo(name = "description")
+    private String description;
+
     public Character()
     {
     }
@@ -22,16 +30,6 @@ public class Character
         this.name = name;
         this.description = description;
     }
-
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    private int id;
-
-    @ColumnInfo(name = "name")
-    private String name;
-
-    @ColumnInfo(name = "description")
-    private String description;
 
     public int getId()
     {

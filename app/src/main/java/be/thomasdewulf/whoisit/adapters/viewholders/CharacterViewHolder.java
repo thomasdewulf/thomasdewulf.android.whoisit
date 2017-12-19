@@ -9,7 +9,7 @@ import be.thomasdewulf.whoisit.databinding.CharacterListItemBinding;
  * Created by thomasdewulf on 27/11/17.
  */
 
-public  class CharacterViewHolder extends RecyclerView.ViewHolder
+public class CharacterViewHolder extends RecyclerView.ViewHolder
 {
     private final CharacterListItemBinding binding;
 

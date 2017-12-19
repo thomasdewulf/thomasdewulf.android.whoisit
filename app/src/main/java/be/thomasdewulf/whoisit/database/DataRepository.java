@@ -19,29 +19,29 @@ public class DataRepository
     private final AppDatabase database;
 
 
-
-private DataRepository(final AppDatabase database)
-{
-    this.database = database;
-
-}
-
-public static DataRepository getInstance(final AppDatabase database)
-{
-    if(instance == null)
+    private DataRepository(final AppDatabase database)
     {
-        synchronized (DataRepository.class)
+        this.database = database;
+
+    }
+
+    public static DataRepository getInstance(final AppDatabase database)
+    {
+        if (instance == null)
         {
-            if(instance == null)
+            synchronized (DataRepository.class)
             {
-                instance = new DataRepository(database);
+                if (instance == null)
+                {
+                    instance = new DataRepository(database);
+                }
             }
         }
+        return instance;
     }
-    return  instance;
-}
 
-public LiveData<List<Character>> getCharacters(){
-    return database.characterDao().getAll();
-}
+    public LiveData<List<Character>> getCharacters()
+    {
+        return database.characterDao().getAll();
+    }
 }

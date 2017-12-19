@@ -12,8 +12,9 @@ import be.thomasdewulf.whoisit.models.Character;
 
 public class SharedViewModel extends ViewModel
 {
-    
+
     private MutableLiveData<Character> selectedCharacter;
+
     public SharedViewModel()
     {
         selectedCharacter = new MutableLiveData<>();
@@ -30,5 +31,5 @@ public class SharedViewModel extends ViewModel
         return selectedCharacter;
     }
 
-    
+
 }

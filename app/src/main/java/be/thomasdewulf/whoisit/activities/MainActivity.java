@@ -44,14 +44,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Populeert de database wanneer de app voor het eerst wordt opgestart.*/
+     * Populeert de database wanneer de app voor het eerst wordt opgestart.
+     */
     private void populateDatabase()
     {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(TAG,Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getSharedPreferences(TAG, Context.MODE_PRIVATE);
         boolean defaultValueFirstRun = true;
-        boolean isFirstRun = sharedPreferences.getBoolean(getString(R.string.is_first_run),defaultValueFirstRun);
+        boolean isFirstRun = sharedPreferences.getBoolean(getString(R.string.is_first_run), defaultValueFirstRun);
 
-        if(isFirstRun)
+        if (isFirstRun)
         {
             AppDatabase db = AppDatabase.getInstance(getApplicationContext());
             Initializer.populateDbAsync(db);
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity
             isFirstRun = false;
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(getString(R.string.is_first_run),isFirstRun);
+            editor.putBoolean(getString(R.string.is_first_run), isFirstRun);
             editor.commit();
         }
 
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack("character")
-                .replace(R.id.fragment_container,detailFragment,null)
+                .replace(R.id.fragment_container, detailFragment, null)
                 .commit();
     }
 }

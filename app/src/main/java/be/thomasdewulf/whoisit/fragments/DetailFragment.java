@@ -20,22 +20,31 @@ import be.thomasdewulf.whoisit.ui.viewmodel.SharedViewModel;
 public class DetailFragment extends Fragment
 {
 
-private static final String KEY_CHARACTER_ID = "character_id";
-private FragmentDetailBinding binding;
-private SharedViewModel viewModel;
-private Character character;
+    private static final String KEY_CHARACTER_ID = "character_id";
+    private FragmentDetailBinding binding;
+    private SharedViewModel viewModel;
+    private Character character;
+
     public DetailFragment()
     {
         // Required empty public constructor
     }
 
+    public static DetailFragment forCharachter(int characterId)
+    {
+        DetailFragment fragment = new DetailFragment();
+        Bundle args = new Bundle();
+        args.putInt(KEY_CHARACTER_ID, characterId);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-    binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail,container,false);
-    return  binding.getRoot();
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
+        return binding.getRoot();
     }
 
     @Override
@@ -47,20 +56,10 @@ private Character character;
         observeUI();
     }
 
-private void  observeUI()
-{
-viewModel.getSelectedCharacter().observe(this, character -> {
-    binding.setCharacter(character);
-});
-}
-
-    public static DetailFragment forCharachter(int characterId)
+    private void observeUI()
     {
-        DetailFragment fragment = new DetailFragment();
-        Bundle args = new Bundle();
-        args.putInt(KEY_CHARACTER_ID,characterId);
-        fragment.setArguments(args);
-        return fragment;
+        viewModel.getSelectedCharacter().observe(this, character ->
+                binding.setCharacter(character));
     }
 
 }

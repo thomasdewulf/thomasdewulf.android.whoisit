@@ -23,8 +23,8 @@ import be.thomasdewulf.whoisit.ui.CharacterClickCallback;
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder>
 {
     private final static String TAG = "CharacterAdapter";
-    private List<Character> characters;
     private final CharacterClickCallback characterClickCallback;
+    private List<Character> characters;
 
     public CharacterAdapter(CharacterClickCallback clickCallback)
     {
@@ -57,12 +57,11 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder>
 
     public void setValues(List<Character> newCharacters)
     {
-        if(characters == null)
+        if (characters == null)
         {
             this.characters = newCharacters;
             notifyItemRangeInserted(0, newCharacters.size());
-        }
-        else
+        } else
         {
             DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback()
             {
@@ -87,21 +86,19 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder>
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition)
                 {
-                  Character oldCharacter = characters.get(oldItemPosition);
-                  Character newCharacter = newCharacters.get(newItemPosition);
-                  boolean isIdTheSame = oldCharacter.getId() == newCharacter.getId();
-                  boolean isNameTheSame = oldCharacter.getName() == newCharacter.getName();
-                  boolean isDescriptionTheSame = oldCharacter.getDescription() == newCharacter.getDescription();
+                    Character oldCharacter = characters.get(oldItemPosition);
+                    Character newCharacter = newCharacters.get(newItemPosition);
+                    boolean isIdTheSame = oldCharacter.getId() == newCharacter.getId();
+                    boolean isNameTheSame = oldCharacter.getName() == newCharacter.getName();
+                    boolean isDescriptionTheSame = oldCharacter.getDescription() == newCharacter.getDescription();
 
-                  return isIdTheSame && isNameTheSame && isDescriptionTheSame;
+                    return isIdTheSame && isNameTheSame && isDescriptionTheSame;
                 }
             });
 
             characters = newCharacters;
             result.dispatchUpdatesTo(this);
         }
-
-
 
 
     }
