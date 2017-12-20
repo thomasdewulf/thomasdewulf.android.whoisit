@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -89,6 +90,7 @@ public class CharachterListFragment extends Fragment
            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
            {
                 adapter.remove(viewHolder.getAdapterPosition());
+                makeSnackbar(binding.addCharacterButton,"Karakter is verwijderd");
            }
        };
 
@@ -118,6 +120,15 @@ public class CharachterListFragment extends Fragment
         CharacterListViewModel.Factory viewModelFactory = new CharacterListViewModel.Factory(getActivity().getApplication());
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CharacterListViewModel.class);
         observeUI();
+
+    }
+
+    private void makeSnackbar(View view, String message)
+    {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+
+
 
     }
 }
