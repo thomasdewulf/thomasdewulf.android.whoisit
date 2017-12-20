@@ -61,6 +61,8 @@ public class CharachterListFragment extends Fragment
         return binding.getRoot();
     }
 
+
+
     private void observeUI()
     {
         //Observeren van karakters in viewmodel. Recyclerview adapter waarden doorgeven wanneer ze geupdatet worden.

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import be.thomasdewulf.whoisit.R;
 import be.thomasdewulf.whoisit.database.AppDatabase;
@@ -13,7 +12,6 @@ import be.thomasdewulf.whoisit.fragments.CharachterListFragment;
 import be.thomasdewulf.whoisit.fragments.DetailFragment;
 import be.thomasdewulf.whoisit.models.Character;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity
             CharachterListFragment listFragment = new CharachterListFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.fragment_container, listFragment, CharachterListFragment.TAG)
+                    .replace(R.id.fragment_container, listFragment, CharachterListFragment.TAG)
                     .commit();
         }
     }
@@ -66,11 +64,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    @OnClick(R.id.addCharacterButton)
-    public void showAddDialog()
-    {
-        Log.i(TAG, "FAB was clicked");
-    }
+
 
     /**
      * Detail scherm van een karakter weergeven
