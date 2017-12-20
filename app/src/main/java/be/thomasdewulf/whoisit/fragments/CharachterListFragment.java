@@ -66,18 +66,31 @@ public class CharachterListFragment extends Fragment
        RecyclerView recyclerView = binding.characterList;
        adapter = new CharacterAdapter(characterClickCallback);
        recyclerView.setAdapter(adapter);
-       //animation
+       setupAnimations(recyclerView);
+       setupDivider(recyclerView);
+       setupSwipeToDelete(recyclerView);
+
+   }
+
+   private void setupAnimations(RecyclerView recyclerView)
+   {
        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
        itemAnimator.setAddDuration(100);
        itemAnimator.setRemoveDuration(100);
        recyclerView.setItemAnimator(itemAnimator);
+   }
 
+   private void setupDivider(RecyclerView recyclerView)
+   {
        //Dividers
        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),layoutManager.getOrientation());
        recyclerView.addItemDecoration(dividerItemDecoration);
+   }
 
+   private void setupSwipeToDelete(RecyclerView recyclerView)
+   {
+       //Swipe to delete
        ItemTouchHelper.SimpleCallback itemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT)
        {
            @Override
@@ -89,8 +102,8 @@ public class CharachterListFragment extends Fragment
            @Override
            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
            {
-                adapter.remove(viewHolder.getAdapterPosition());
-                makeSnackbar(binding.addCharacterButton,"Karakter is verwijderd");
+               adapter.remove(viewHolder.getAdapterPosition());
+               makeSnackbar(binding.addCharacterButton,"Karakter is verwijderd");
            }
        };
 
@@ -120,15 +133,11 @@ public class CharachterListFragment extends Fragment
         CharacterListViewModel.Factory viewModelFactory = new CharacterListViewModel.Factory(getActivity().getApplication());
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CharacterListViewModel.class);
         observeUI();
-
     }
 
     private void makeSnackbar(View view, String message)
     {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
-
-
-
     }
 }
