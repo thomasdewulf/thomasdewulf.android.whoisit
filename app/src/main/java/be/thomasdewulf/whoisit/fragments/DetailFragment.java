@@ -14,7 +14,6 @@ import be.thomasdewulf.whoisit.R;
 import be.thomasdewulf.whoisit.activities.MainActivity;
 import be.thomasdewulf.whoisit.databinding.FragmentDetailBinding;
 import be.thomasdewulf.whoisit.ui.viewmodel.SharedViewModel;
-import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,11 +27,6 @@ public class DetailFragment extends Fragment
 
     private Character character;
 
-    //UI bindings
-
-
-    private Unbinder unbinder;
-
     public DetailFragment()
     {
         // Required empty public constructor
@@ -45,9 +39,7 @@ public class DetailFragment extends Fragment
                              Bundle savedInstanceState)
     {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
-
         setupUI();
-       // unbinder = ButterKnife.bind(binding.getRoot());
         return binding.getRoot();
     }
 
@@ -60,12 +52,6 @@ public class DetailFragment extends Fragment
         observeUI();
     }
 
-    @Override
-    public void onDestroyView()
-    {
-        super.onDestroyView();
-        //unbinder.unbind();
-    }
 
     private void setupUI()
     {
@@ -79,14 +65,7 @@ public class DetailFragment extends Fragment
         });
         }
 
-    public static DetailFragment forCharachter(int characterId)
-    {
-        DetailFragment fragment = new DetailFragment();
-        Bundle args = new Bundle();
-        args.putInt(KEY_CHARACTER_ID, characterId);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
     private void observeUI()
     {
         viewModel.getSelectedCharacter().observe(this, character ->

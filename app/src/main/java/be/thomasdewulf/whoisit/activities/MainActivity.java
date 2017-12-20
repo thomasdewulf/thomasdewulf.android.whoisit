@@ -10,7 +10,6 @@ import be.thomasdewulf.whoisit.database.AppDatabase;
 import be.thomasdewulf.whoisit.database.Initializer;
 import be.thomasdewulf.whoisit.fragments.CharachterListFragment;
 import be.thomasdewulf.whoisit.fragments.DetailFragment;
-import be.thomasdewulf.whoisit.models.Character;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity
@@ -69,9 +68,9 @@ public class MainActivity extends AppCompatActivity
     /**
      * Detail scherm van een karakter weergeven
      */
-    public void show(Character character)
+    public void show()
     {
-        DetailFragment detailFragment = DetailFragment.forCharachter(character.getId());
+        DetailFragment detailFragment = new DetailFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack("character")

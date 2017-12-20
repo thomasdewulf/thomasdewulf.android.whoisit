@@ -108,4 +108,10 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder>
     {
         return characters == null ? 0 : characters.size();
     }
+
+    public void remove(int position)
+    {
+        characters.remove(position);
+        notifyItemRemoved(position);
+    }
 }
