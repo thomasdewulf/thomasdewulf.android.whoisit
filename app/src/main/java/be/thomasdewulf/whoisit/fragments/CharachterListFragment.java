@@ -7,6 +7,10 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,13 +59,25 @@ public class CharachterListFragment extends Fragment
     {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_charachter_list, container, false);
         //Recyclerview
-        adapter = new CharacterAdapter(characterClickCallback);
-        binding.characterList.setAdapter(adapter);
+        setupUI();
 
         return binding.getRoot();
     }
 
+   private void setupUI()
+   {
+       RecyclerView recyclerView = binding.characterList;
+       adapter = new CharacterAdapter(characterClickCallback);
+       recyclerView.setAdapter(adapter);
+       RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+       itemAnimator.setAddDuration(1000);
+       itemAnimator.setRemoveDuration(1000);
+       recyclerView.setItemAnimator(itemAnimator);
+       LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
+       DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),layoutManager.getOrientation());
+       recyclerView.addItemDecoration(dividerItemDecoration);
+   }
 
     private void observeUI()
     {
