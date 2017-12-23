@@ -1,5 +1,7 @@
 package be.thomasdewulf.whoisit.ui;
 
+import android.view.View;
+
 import be.thomasdewulf.whoisit.models.Character;
 
 /**
@@ -9,5 +11,5 @@ import be.thomasdewulf.whoisit.models.Character;
 
 public interface CharacterClickCallback
 {
-    void onClick(Character character);
+    void onClick(View view, Character character);
 }

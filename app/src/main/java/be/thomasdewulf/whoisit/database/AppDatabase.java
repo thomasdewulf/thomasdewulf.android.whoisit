@@ -16,7 +16,7 @@ import be.thomasdewulf.whoisit.models.Character;
  * Created by thomasdewulf on 13/11/17.
  */
 
-@Database(entities = {Character.class}, version = 1)
+@Database(entities = {Character.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase
 {
 

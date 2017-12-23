@@ -3,11 +3,14 @@ package be.thomasdewulf.whoisit.fragments;
 
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,11 +19,15 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import be.thomasdewulf.whoisit.R;
+import be.thomasdewulf.whoisit.WhoIsItApplication;
 import be.thomasdewulf.whoisit.activities.MainActivity;
 import be.thomasdewulf.whoisit.adapters.CharacterAdapter;
 import be.thomasdewulf.whoisit.databinding.FragmentCharachterListBinding;
+import be.thomasdewulf.whoisit.models.Character;
 import be.thomasdewulf.whoisit.ui.CharacterClickCallback;
 import be.thomasdewulf.whoisit.ui.viewmodel.CharacterListViewModel;
 import be.thomasdewulf.whoisit.ui.viewmodel.SharedViewModel;
@@ -31,13 +38,14 @@ import be.thomasdewulf.whoisit.ui.viewmodel.SharedViewModel;
 public class CharachterListFragment extends Fragment
 {
     public static final String TAG = "CharacterListFragment";
-    private final CharacterClickCallback characterClickCallback = character ->
+    private final CharacterClickCallback characterClickCallback = (view, character) ->
     {
         if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED))
         {
             SharedViewModel viewmodel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
             viewmodel.select(character);
-            ((MainActivity) getActivity()).show();
+           ImageView image = view.findViewById(R.id.characterImage);
+            ((MainActivity) getActivity()).show(image);
         }
     };
     private CharacterListViewModel viewModel;
@@ -69,6 +77,7 @@ public class CharachterListFragment extends Fragment
        setupAnimations(recyclerView);
        setupDivider(recyclerView);
        setupSwipeToDelete(recyclerView);
+       setupFabListener();
 
    }
 
@@ -110,6 +119,49 @@ public class CharachterListFragment extends Fragment
        ItemTouchHelper helper = new ItemTouchHelper(itemTouchCallback);
        helper.attachToRecyclerView(recyclerView);
    }
+
+   private void setupFabListener()
+   {
+       binding.addCharacterButton.setOnClickListener(v ->
+       {
+        openDialog();
+       });
+   }
+
+
+
+    private void openDialog() {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        AddCharacterFragment newFragment = new AddCharacterFragment();
+
+        newFragment.setTargetFragment(CharachterListFragment.this, 100);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.add(R.id.fragment_container, newFragment)
+                .addToBackStack(null).commit();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 100)
+        {
+            //OK
+            Toast.makeText(getContext(),"Karakter werd toegevoegd",Toast.LENGTH_LONG).show();
+            String name = data.getExtras().getString(AddCharacterFragment.INTENT_EXTRA_NAME);
+            String description = data.getExtras().getString(AddCharacterFragment.INTENT_EXTRA_DESCRIPTION);
+            String path = data.getExtras().getString(AddCharacterFragment.INTENT_EXTRA_PHOTO);
+            Character character = new Character(name,description,path);
+
+           WhoIsItApplication app = (WhoIsItApplication) getActivity().getApplication();
+           app.getRepository().insertCharacter(character);
+        }
+        else if(requestCode == 101){
+            //Cancelled
+            Toast.makeText(getContext(),"Karakter werd niet toegevoegd",Toast.LENGTH_LONG).show();
+    }
+    }
 
     private void observeUI()
     {

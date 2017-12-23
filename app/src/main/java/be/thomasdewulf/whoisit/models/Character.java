@@ -21,14 +21,17 @@ public class Character
     @ColumnInfo(name = "description")
     private String description;
 
+    private String imageUrl;
+
     public Character()
     {
     }
 
-    public Character(String name, String description)
+    public Character(String name, String description, String image)
     {
         this.name = name;
         this.description = description;
+        this.imageUrl = image;
     }
 
     public int getId()
@@ -59,5 +62,15 @@ public class Character
     public void setDescription(String description)
     {
         this.description = description;
+    }
+
+    public String getImageUrl()
+    {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl)
+    {
+        this.imageUrl = imageUrl;
     }
 }

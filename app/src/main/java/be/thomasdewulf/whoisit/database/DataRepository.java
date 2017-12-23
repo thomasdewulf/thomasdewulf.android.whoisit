@@ -1,6 +1,7 @@
 package be.thomasdewulf.whoisit.database;
 
 import android.arch.lifecycle.LiveData;
+import android.os.AsyncTask;
 
 import java.util.List;
 
@@ -43,5 +44,30 @@ public class DataRepository
     public LiveData<List<Character>> getCharacters()
     {
         return database.characterDao().getAll();
+    }
+
+    public void insertCharacter(Character character)
+    {
+       InsertTask task = new InsertTask(database,character);
+       task.execute();
+    }
+
+    private static class InsertTask extends AsyncTask<Void,Void,Void>
+    {
+        private final AppDatabase appDatabase;
+        private final Character character;
+
+        public InsertTask(AppDatabase appDatabase, Character character)
+        {
+            this.appDatabase = appDatabase;
+            this.character = character;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids)
+        {
+            appDatabase.characterDao().insertCharacters(character);
+            return null;
+        }
     }
 }

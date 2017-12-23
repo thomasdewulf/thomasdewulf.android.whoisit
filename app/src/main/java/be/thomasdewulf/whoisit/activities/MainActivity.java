@@ -1,13 +1,11 @@
 package be.thomasdewulf.whoisit.activities;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 
 import be.thomasdewulf.whoisit.R;
-import be.thomasdewulf.whoisit.database.AppDatabase;
-import be.thomasdewulf.whoisit.database.Initializer;
 import be.thomasdewulf.whoisit.fragments.CharachterListFragment;
 import be.thomasdewulf.whoisit.fragments.DetailFragment;
 import butterknife.ButterKnife;
@@ -24,7 +22,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         showListFragmentOnStart(savedInstanceState);
-        populateDatabase();
+
     }
 
     private void showListFragmentOnStart(Bundle savedInstanceState)
@@ -40,39 +38,20 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    /**
-     * Populeert de database wanneer de app voor het eerst wordt opgestart.
-     */
-    private void populateDatabase()
-    {
-        SharedPreferences sharedPreferences = this.getSharedPreferences(TAG, Context.MODE_PRIVATE);
-        boolean defaultValueFirstRun = true;
-        boolean isFirstRun = sharedPreferences.getBoolean(getString(R.string.is_first_run), defaultValueFirstRun);
 
-        if (isFirstRun)
-        {
-            AppDatabase db = AppDatabase.getInstance(getApplicationContext());
-            Initializer.populateDbAsync(db);
-
-            isFirstRun = false;
-
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(getString(R.string.is_first_run), isFirstRun);
-            editor.commit();
-        }
-
-    }
 
 
 
     /**
      * Detail scherm van een karakter weergeven
      */
-    public void show()
+    public void show(ImageView imageView)
     {
+
         DetailFragment detailFragment = new DetailFragment();
         getSupportFragmentManager()
                 .beginTransaction()
+                .addSharedElement(imageView, ViewCompat.getTransitionName(imageView))
                 .addToBackStack("character")
                 .replace(R.id.fragment_container, detailFragment, null)
                 .commit();

@@ -1,6 +1,7 @@
 package be.thomasdewulf.whoisit.adapters;
 
 import android.databinding.DataBindingUtil;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -43,6 +44,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder>
 
         CharacterViewHolder holder = new CharacterViewHolder(binding);
         binding.setCallback(characterClickCallback);
+
         Log.d(this.getClass().getSimpleName(), "Creating viewholder");
         return holder;
     }
@@ -51,6 +53,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder>
     public void onBindViewHolder(CharacterViewHolder holder, int position)
     {
         Log.d(this.getClass().getSimpleName(), "Binding position " + position);
+        ViewCompat.setTransitionName(holder.getBinding().characterImage,holder.getBinding().characterName.getText().toString());
         holder.getBinding().setCharacter(characters.get(position));
         holder.getBinding().executePendingBindings();
     }

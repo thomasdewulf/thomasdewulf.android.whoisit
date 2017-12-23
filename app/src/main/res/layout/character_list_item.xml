@@ -18,28 +18,43 @@
     tools:layout_editor_absoluteY="81dp"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
-    android:onClick="@{() -> callback.onClick(character)}"
+    android:onClick="@{(v) -> callback.onClick(v, character)}"
     >
+
+    <ImageView
+        android:id="@+id/characterImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@{character.imageUrl}"/>
 
     <TextView
         android:id="@+id/characterName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="@{character.name}"
         android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/characterImage"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="56dp"/>
+        tools:text="Name"/>
 
     <TextView
         android:id="@+id/characterDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
         android:text="@{character.description}"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/characterImage"
         app:layout_constraintTop_toBottomOf="@+id/characterName"
-        tools:layout_editor_absoluteX="56dp"/>
+        tools:text="Description"/>
 </android.support.constraint.ConstraintLayout>
 </layout>
