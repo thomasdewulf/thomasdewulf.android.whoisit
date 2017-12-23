@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import be.thomasdewulf.whoisit.R;
-import be.thomasdewulf.whoisit.fragments.CharachterListFragment;
+import be.thomasdewulf.whoisit.fragments.CharacterListFragment;
 import be.thomasdewulf.whoisit.fragments.DetailFragment;
 import butterknife.ButterKnife;
 
@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity
         /**Lijst fragment weergeven wanneer opstart*/
         if (savedInstanceState == null)
         {
-            CharachterListFragment listFragment = new CharachterListFragment();
+            CharacterListFragment listFragment = new CharacterListFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, listFragment, CharachterListFragment.TAG)
+                    .replace(R.id.fragment_container, listFragment, CharacterListFragment.TAG)
                     .commit();
         }
     }

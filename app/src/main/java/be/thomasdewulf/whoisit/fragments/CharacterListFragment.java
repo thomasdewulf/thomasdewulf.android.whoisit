@@ -35,7 +35,7 @@ import be.thomasdewulf.whoisit.ui.viewmodel.SharedViewModel;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CharachterListFragment extends Fragment
+public class CharacterListFragment extends Fragment
 {
     public static final String TAG = "CharacterListFragment";
     private final CharacterClickCallback characterClickCallback = (view, character) ->
@@ -53,7 +53,7 @@ public class CharachterListFragment extends Fragment
     private FragmentCharachterListBinding binding;
 
 
-    public CharachterListFragment()
+    public CharacterListFragment()
     {
         // Required empty public constructor
     }
@@ -134,7 +134,7 @@ public class CharachterListFragment extends Fragment
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         AddCharacterFragment newFragment = new AddCharacterFragment();
 
-        newFragment.setTargetFragment(CharachterListFragment.this, 100);
+        newFragment.setTargetFragment(CharacterListFragment.this, 100);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.add(R.id.fragment_container, newFragment)
