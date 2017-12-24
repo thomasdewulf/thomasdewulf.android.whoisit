@@ -134,7 +134,7 @@ private final AddCharacterImageCallback characterImageCallback = () ->
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
         {
            //Show image in imageview
-            Picasso.with(getContext()).load("file:///" + photoPath).into(binding.imageView);
+            Picasso.with(getContext()).load("file:///" + photoPath).fit().into(binding.imageView);
 
         }
     }

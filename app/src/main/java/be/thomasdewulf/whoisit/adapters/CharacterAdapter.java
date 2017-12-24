@@ -53,7 +53,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder>
     public void onBindViewHolder(CharacterViewHolder holder, int position)
     {
         Log.d(this.getClass().getSimpleName(), "Binding position " + position);
-        ViewCompat.setTransitionName(holder.getBinding().characterImage,holder.getBinding().characterName.getText().toString());
+        ViewCompat.setTransitionName(holder.getBinding().characterImage,characters.get(position).getName());
         holder.getBinding().setCharacter(characters.get(position));
         holder.getBinding().executePendingBindings();
     }

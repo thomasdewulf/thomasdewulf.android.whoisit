@@ -49,9 +49,13 @@ public class MainActivity extends AppCompatActivity
     {
 
         DetailFragment detailFragment = new DetailFragment();
+
+
+        String transitionName = ViewCompat.getTransitionName(imageView);
+        detailFragment.setTransitionName(transitionName);
         getSupportFragmentManager()
                 .beginTransaction()
-                .addSharedElement(imageView, ViewCompat.getTransitionName(imageView))
+                .addSharedElement(imageView, transitionName)
                 .addToBackStack("character")
                 .replace(R.id.fragment_container, detailFragment, null)
                 .commit();

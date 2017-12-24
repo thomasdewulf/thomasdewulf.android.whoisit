@@ -6,4 +6,5 @@
     <string name="character_description_hint">Beschrijving van karakter</string>
     <string name="add_character">Karakter toevoegen</string>
     <string name="save">Opslaan</string>
+    <string name="simple_fragment_transition">simple_fragment_transition</string>
 </resources>
