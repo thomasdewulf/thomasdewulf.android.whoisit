@@ -9,6 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.transition.TransitionInflater;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -26,12 +29,10 @@ import be.thomasdewulf.whoisit.ui.viewmodel.SharedViewModel;
 public class DetailFragment extends Fragment
 {
 
-    private static final String KEY_CHARACTER_ID = "character_id";
+
     private FragmentDetailBinding binding;
     private SharedViewModel viewModel;
     private String transitionName;
-
-    private Character character;
 
     public DetailFragment()
     {
@@ -49,7 +50,8 @@ public class DetailFragment extends Fragment
         super.onCreate(savedInstanceState);
 
         postponeEnterTransition();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
             setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(android.R.transition.move));
 
         }
@@ -75,31 +77,26 @@ public class DetailFragment extends Fragment
         {
             binding.backdrop.setTransitionName(transitionName);
         }
-            Picasso.with(getContext())
-                    .load("file:////" +viewModel.getSelectedCharacter().getImageUrl() )
-                    .noFade()
-                    .into(binding.backdrop, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            startPostponedEnterTransition();
-                        }
+        Picasso.with(getContext())
+                .load("file:////" + viewModel.getSelectedCharacter().getImageUrl())
+                .noFade()
+                .into(binding.backdrop, new Callback()
+                {
+                    @Override
+                    public void onSuccess()
+                    {
+                        startPostponedEnterTransition();
+                    }
 
-                        @Override
-                        public void onError() {
-                            startPostponedEnterTransition();
-                        }
-                    });
+                    @Override
+                    public void onError()
+                    {
+                        startPostponedEnterTransition();
+                    }
+                });
 
-
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState)
-    {
-        super.onActivityCreated(savedInstanceState);
 
     }
-
 
     private void setupUI()
     {
@@ -109,10 +106,36 @@ public class DetailFragment extends Fragment
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         binding.toolbar.setNavigationOnClickListener(v ->
         {
-          activity.onBackPressed();
+            activity.onBackPressed();
         });
+
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_character_detail,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        if(id == R.id.action_edit)
+        {
+            //TODO: edit
+
+            return true;
+        } else if(id == R.id.action_delete)
+        {
+            //TODO: delete
+
+            return true;
         }
 
-
-
+        return super.onOptionsItemSelected(item);
+    }
 }

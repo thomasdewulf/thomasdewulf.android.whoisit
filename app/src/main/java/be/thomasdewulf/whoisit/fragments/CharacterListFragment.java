@@ -17,6 +17,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -74,6 +76,12 @@ public class CharacterListFragment extends Fragment
        RecyclerView recyclerView = binding.characterList;
        adapter = new CharacterAdapter(characterClickCallback);
        recyclerView.setAdapter(adapter);
+
+       MainActivity activity = (MainActivity) getActivity();
+
+       activity.setSupportActionBar(binding.toolbar);
+       setHasOptionsMenu(true);
+
        setupAnimations(recyclerView);
        setupDivider(recyclerView);
        setupSwipeToDelete(recyclerView);
@@ -191,5 +199,12 @@ public class CharacterListFragment extends Fragment
     {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_character_list, menu);
     }
 }

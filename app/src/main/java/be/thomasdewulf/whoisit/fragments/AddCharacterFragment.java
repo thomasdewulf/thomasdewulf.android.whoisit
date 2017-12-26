@@ -20,6 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -42,6 +45,7 @@ public class AddCharacterFragment extends DialogFragment
     private FragmentAddCharacterBinding binding;
     private final int REQUEST_IMAGE_CAPTURE = 1;
     private String photoPath;
+    private AwesomeValidation validation;
 
     public static final String INTENT_EXTRA_NAME = "intent_extra_name";
     public static final String INTENT_EXTRA_DESCRIPTION = "intent_extra_description";
@@ -96,6 +100,16 @@ private final AddCharacterImageCallback characterImageCallback = () ->
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState)
+    {
+        super.onActivityCreated(savedInstanceState);
+        validation = new AwesomeValidation(ValidationStyle.UNDERLABEL);
+        validation.setContext(getContext());
+        validation.addValidation(binding.characterName, RegexTemplate.NOT_EMPTY, "Naam is verplicht.");
+        validation.addValidation(binding.characterDescription, RegexTemplate.NOT_EMPTY, "Beschrijving is verplicht.");
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
@@ -109,13 +123,17 @@ private final AddCharacterImageCallback characterImageCallback = () ->
 
         if(id == R.id.action_save)
         {
-            Intent intent = new Intent();
-            intent.putExtra(INTENT_EXTRA_NAME, binding.characterName.getText().toString());
-            intent.putExtra(INTENT_EXTRA_DESCRIPTION, binding.characterDescription.getText().toString());
-            intent.putExtra(INTENT_EXTRA_PHOTO,photoPath);
-            getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
-            dismiss();
-            return true;
+            //TODO: validation toevoegen
+
+                Intent intent = new Intent();
+                intent.putExtra(INTENT_EXTRA_NAME, binding.characterName.getText().toString());
+                intent.putExtra(INTENT_EXTRA_DESCRIPTION, binding.characterDescription.getText().toString());
+                intent.putExtra(INTENT_EXTRA_PHOTO,photoPath);
+                getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+                dismiss();
+                return true;
+
+
         }
         else if(id == android.R.id.home)
         {

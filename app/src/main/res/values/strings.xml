@@ -7,4 +7,9 @@
     <string name="add_character">Karakter toevoegen</string>
     <string name="save">Opslaan</string>
     <string name="simple_fragment_transition">simple_fragment_transition</string>
+    <string name="name_validation">Naam is verplicht</string>
+    <string name="description_validation">Beschrijving is verplicht</string>
+    <string name="edit">Bewerken</string>
+    <string name="delete">Verwijderen</string>
+    <string name="restart">Spel herstarten</string>
 </resources>
