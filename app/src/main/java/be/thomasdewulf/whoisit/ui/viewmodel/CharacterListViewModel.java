@@ -43,11 +43,13 @@ public class CharacterListViewModel extends AndroidViewModel
         return characters;
     }
 
-    private void loadCharacters()
+    public void loadCharacters()
     {
         LiveData<List<Character>> charactersLive = dataRepository.getCharacters();
         characters.addSource(charactersLive, characters::setValue);
     }
+
+
 
 
     /**

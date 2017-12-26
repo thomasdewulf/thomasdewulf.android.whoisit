@@ -12,4 +12,5 @@
     <string name="edit">Bewerken</string>
     <string name="delete">Verwijderen</string>
     <string name="restart">Spel herstarten</string>
+    <string name="restarted">Spel is herstart</string>
 </resources>

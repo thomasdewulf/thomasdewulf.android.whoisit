@@ -19,6 +19,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -53,6 +54,7 @@ public class CharacterListFragment extends Fragment
     private CharacterListViewModel viewModel;
     private CharacterAdapter adapter;
     private FragmentCharachterListBinding binding;
+
 
 
     public CharacterListFragment()
@@ -178,6 +180,7 @@ public class CharacterListFragment extends Fragment
         {
             if (characters != null)
             {
+
                 adapter.setValues(characters);
 
             }
@@ -206,5 +209,18 @@ public class CharacterListFragment extends Fragment
     {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_character_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        if(id == R.id.action_restart)
+        {
+           viewModel.loadCharacters();
+           makeSnackbar(binding.addCharacterButton, getString(R.string.restarted));
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
