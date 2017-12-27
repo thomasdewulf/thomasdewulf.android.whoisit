@@ -42,35 +42,36 @@ import static android.app.Activity.RESULT_OK;
  */
 public class AddCharacterFragment extends DialogFragment
 {
-    private FragmentAddCharacterBinding binding;
-    private final int REQUEST_IMAGE_CAPTURE = 1;
-    private String photoPath;
-    private AwesomeValidation validation;
-
     public static final String INTENT_EXTRA_NAME = "intent_extra_name";
     public static final String INTENT_EXTRA_DESCRIPTION = "intent_extra_description";
     public static final String INTENT_EXTRA_PHOTO = "intent_extra_photo";
-
-
-private final AddCharacterImageCallback characterImageCallback = () ->
-{
-    File photoFile = null;
-    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-    try {
-        photoFile = createImageFile();
-    } catch (IOException ex) {
-        // Error occurred while creating the File
-        Toast.makeText(getContext(),"Bestand voor foto kon niet aangemaakt worden. Probeer opnieuw",Toast.LENGTH_LONG).show();
-    }
-    // Continue only if the File was successfully created
-    if (photoFile != null) {
-        Uri photoURI = FileProvider.getUriForFile(getContext(),
-                "be.thomasdewulf.whoisit.fileprovider",
-                photoFile);
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-    }
-};
+    private final int REQUEST_IMAGE_CAPTURE = 1;
+    private FragmentAddCharacterBinding binding;
+    private String photoPath;
+    private final AddCharacterImageCallback characterImageCallback = () ->
+    {
+        File photoFile = null;
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try
+        {
+            photoFile = createImageFile();
+        } catch (IOException ex)
+        {
+            // Error occurred while creating the File
+            Toast.makeText(getContext(), "Bestand voor foto kon niet aangemaakt worden. Probeer opnieuw", Toast.LENGTH_LONG).show();
+        }
+        // Continue only if the File was successfully created
+        if (photoFile != null)
+        {
+            Uri photoURI = FileProvider.getUriForFile(getContext(),
+                    "be.thomasdewulf.whoisit.fileprovider",
+                    photoFile);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    };
+    private AwesomeValidation validation;
+    private boolean hasValidPicture = false;
 
     public AddCharacterFragment()
     {
@@ -83,14 +84,15 @@ private final AddCharacterImageCallback characterImageCallback = () ->
                              Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_add_character, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_character, container, false);
         binding.setCallback(characterImageCallback);
 
 
-        MainActivity activity =(MainActivity) getActivity();
+        MainActivity activity = (MainActivity) getActivity();
         activity.setSupportActionBar(binding.toolbar);
         ActionBar actionBar = activity.getSupportActionBar();
-        if (actionBar != null) {
+        if (actionBar != null)
+        {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
             actionBar.setHomeAsUpIndicator(android.R.drawable.ic_menu_close_clear_cancel);
@@ -113,7 +115,7 @@ private final AddCharacterImageCallback characterImageCallback = () ->
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_add_character,menu);
+        inflater.inflate(R.menu.menu_add_character, menu);
     }
 
     @Override
@@ -121,24 +123,27 @@ private final AddCharacterImageCallback characterImageCallback = () ->
     {
         int id = item.getItemId();
 
-        if(id == R.id.action_save)
+        if (id == R.id.action_save)
         {
             //TODO: validation toevoegen
-if(validation.validate())
-{
+            if (!hasValidPicture)
+            {
+                Toast.makeText(getContext(),"Er is nog geen foto toegevoegd", Toast.LENGTH_LONG).show();
+            }
+            if (validation.validate() && hasValidPicture)
+            {
 
 
-    Intent intent = new Intent();
-    intent.putExtra(INTENT_EXTRA_NAME, binding.characterName.getText().toString());
-    intent.putExtra(INTENT_EXTRA_DESCRIPTION, binding.characterDescription.getText().toString());
-    intent.putExtra(INTENT_EXTRA_PHOTO, photoPath);
-    getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
-    dismiss();
-    return true;
-}
+                Intent intent = new Intent();
+                intent.putExtra(INTENT_EXTRA_NAME, binding.characterName.getText().toString());
+                intent.putExtra(INTENT_EXTRA_DESCRIPTION, binding.characterDescription.getText().toString());
+                intent.putExtra(INTENT_EXTRA_PHOTO, photoPath);
+                getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+                dismiss();
+                return true;
+            }
 
-        }
-        else if(id == android.R.id.home)
+        } else if (id == android.R.id.home)
         {
             getTargetFragment().onActivityResult(101, Activity.RESULT_OK, null);
             dismiss();
@@ -152,15 +157,17 @@ if(validation.validate())
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
         {
-           //Show image in imageview
+            //Show image in imageview
             Picasso.with(getContext()).load("file:///" + photoPath).fit().into(binding.imageView);
+            hasValidPicture = true;
 
         }
     }
 
-    private File createImageFile() throws IOException {
+    private File createImageFile() throws IOException
+    {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
