@@ -116,7 +116,7 @@ public class DataRepository
         @Override
         protected Void doInBackground(Void... voids)
         {
-           database.characterDao().deleteCharachters(character);
+           database.characterDao().updateCharachters(character);
            return null;
         }
     }

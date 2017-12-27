@@ -101,8 +101,9 @@ public class DetailFragment extends Fragment
             //TODO: delete
             WhoIsItApplication app = (WhoIsItApplication) getActivity().getApplication();
             app.getRepository().deleteCharacter(viewModel.getSelectedCharacter());
-            getActivity().onBackPressed();
             Toast.makeText(getContext(), "Karakter werd definitief verwijderd", Toast.LENGTH_LONG).show();
+            getActivity().onBackPressed();
+
             return true;
         }
 
