@@ -47,15 +47,13 @@ public class CharacterListFragment extends Fragment
         {
             SharedViewModel viewmodel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
             viewmodel.select(character);
-           ImageView image = view.findViewById(R.id.characterImage);
+            ImageView image = view.findViewById(R.id.characterImage);
             ((MainActivity) getActivity()).show(image);
         }
     };
     private CharacterListViewModel viewModel;
     private CharacterAdapter adapter;
     private FragmentCharachterListBinding binding;
-
-
 
     public CharacterListFragment()
     {
@@ -67,80 +65,76 @@ public class CharacterListFragment extends Fragment
                              Bundle savedInstanceState)
     {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_charachter_list, container, false);
-        //Recyclerview
         setupUI();
 
         return binding.getRoot();
     }
 
-   private void setupUI()
-   {
-       RecyclerView recyclerView = binding.characterList;
-       adapter = new CharacterAdapter(characterClickCallback);
-       recyclerView.setAdapter(adapter);
+    private void setupUI()
+    {
+        RecyclerView recyclerView = binding.characterList;
+        adapter = new CharacterAdapter(characterClickCallback,getContext());
+        recyclerView.setAdapter(adapter);
 
-       MainActivity activity = (MainActivity) getActivity();
+        MainActivity activity = (MainActivity) getActivity();
 
-       activity.setSupportActionBar(binding.toolbar);
-       setHasOptionsMenu(true);
+        activity.setSupportActionBar(binding.toolbar);
+        setHasOptionsMenu(true);
 
-       setupAnimations(recyclerView);
-       setupDivider(recyclerView);
-       setupSwipeToDelete(recyclerView);
-       setupFabListener();
+        setupAnimations(recyclerView);
+        setupDivider(recyclerView);
+        setupSwipeToDelete(recyclerView);
+        setupFabListener();
 
-   }
+    }
 
-   private void setupAnimations(RecyclerView recyclerView)
-   {
-       RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
-       itemAnimator.setAddDuration(100);
-       itemAnimator.setRemoveDuration(100);
-       recyclerView.setItemAnimator(itemAnimator);
-   }
+    private void setupAnimations(RecyclerView recyclerView)
+    {
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        itemAnimator.setAddDuration(100);
+        itemAnimator.setRemoveDuration(100);
+        recyclerView.setItemAnimator(itemAnimator);
+    }
 
-   private void setupDivider(RecyclerView recyclerView)
-   {
-       //Dividers
-       LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-       DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),layoutManager.getOrientation());
-       recyclerView.addItemDecoration(dividerItemDecoration);
-   }
+    private void setupDivider(RecyclerView recyclerView)
+    {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+    }
 
-   private void setupSwipeToDelete(RecyclerView recyclerView)
-   {
-       //Swipe to delete
-       ItemTouchHelper.SimpleCallback itemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT)
-       {
-           @Override
-           public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target)
-           {
-               return false;
-           }
+    private void setupSwipeToDelete(RecyclerView recyclerView)
+    {
+        ItemTouchHelper.SimpleCallback itemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT)
+        {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target)
+            {
+                return false;
+            }
 
-           @Override
-           public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
-           {
-               adapter.remove(viewHolder.getAdapterPosition());
-               makeSnackbar(binding.addCharacterButton,"Karakter is verwijderd");
-           }
-       };
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
+            {
+                adapter.remove(viewHolder.getAdapterPosition());
+                makeSnackbar(binding.addCharacterButton, "Karakter is verwijderd");
+            }
+        };
 
-       ItemTouchHelper helper = new ItemTouchHelper(itemTouchCallback);
-       helper.attachToRecyclerView(recyclerView);
-   }
+        ItemTouchHelper helper = new ItemTouchHelper(itemTouchCallback);
+        helper.attachToRecyclerView(recyclerView);
+    }
 
-   private void setupFabListener()
-   {
-       binding.addCharacterButton.setOnClickListener(v ->
-       {
-        openDialog();
-       });
-   }
+    private void setupFabListener()
+    {
+        binding.addCharacterButton.setOnClickListener(v ->
+        {
+            openDialog();
+        });
+    }
 
-
-
-    private void openDialog() {
+    private void openDialog()
+    {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         AddCharacterFragment newFragment = new AddCharacterFragment();
 
@@ -155,22 +149,22 @@ public class CharacterListFragment extends Fragment
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 100)
+        if (requestCode == 100)
         {
             //OK
-            Toast.makeText(getContext(),"Karakter werd toegevoegd",Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Karakter werd toegevoegd", Toast.LENGTH_LONG).show();
             String name = data.getExtras().getString(AddCharacterFragment.INTENT_EXTRA_NAME);
             String description = data.getExtras().getString(AddCharacterFragment.INTENT_EXTRA_DESCRIPTION);
             String path = data.getExtras().getString(AddCharacterFragment.INTENT_EXTRA_PHOTO);
-            Character character = new Character(name,description,path);
+            Character character = new Character(name, description, path);
 
-           WhoIsItApplication app = (WhoIsItApplication) getActivity().getApplication();
-           app.getRepository().insertCharacter(character);
-        }
-        else if(requestCode == 101){
+            WhoIsItApplication app = (WhoIsItApplication) getActivity().getApplication();
+            app.getRepository().insertCharacter(character);
+        } else if (requestCode == 101)
+        {
             //Cancelled
-            Toast.makeText(getContext(),"Karakter werd niet toegevoegd",Toast.LENGTH_LONG).show();
-    }
+            Toast.makeText(getContext(), "Karakter werd niet toegevoegd", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void observeUI()
@@ -180,9 +174,7 @@ public class CharacterListFragment extends Fragment
         {
             if (characters != null)
             {
-
                 adapter.setValues(characters);
-
             }
             binding.executePendingBindings();
         });
@@ -216,10 +208,10 @@ public class CharacterListFragment extends Fragment
     {
         int id = item.getItemId();
 
-        if(id == R.id.action_restart)
+        if (id == R.id.action_restart)
         {
-           viewModel.loadCharacters();
-           makeSnackbar(binding.addCharacterButton, getString(R.string.restarted));
+            viewModel.loadCharacters();
+            makeSnackbar(binding.addCharacterButton, getString(R.string.restarted));
         }
         return super.onOptionsItemSelected(item);
     }

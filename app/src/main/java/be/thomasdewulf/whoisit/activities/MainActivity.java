@@ -1,7 +1,6 @@
 package be.thomasdewulf.whoisit.activities;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
@@ -50,12 +49,8 @@ public class MainActivity extends AppCompatActivity
 
         DetailFragment detailFragment = new DetailFragment();
 
-
-        String transitionName = ViewCompat.getTransitionName(imageView);
-        detailFragment.setTransitionName(transitionName);
         getSupportFragmentManager()
                 .beginTransaction()
-                .addSharedElement(imageView, transitionName)
                 .addToBackStack("character")
                 .replace(R.id.fragment_container, detailFragment, null)
                 .commit();

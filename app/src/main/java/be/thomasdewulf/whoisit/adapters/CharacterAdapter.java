@@ -1,12 +1,14 @@
 package be.thomasdewulf.whoisit.adapters;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -26,9 +28,11 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder>
     private final static String TAG = "CharacterAdapter";
     private final CharacterClickCallback characterClickCallback;
     private List<Character> characters;
+    private  Context context;
 
-    public CharacterAdapter(CharacterClickCallback clickCallback)
+    public CharacterAdapter(CharacterClickCallback clickCallback, Context context)
     {
+        this.context = context;
         this.characterClickCallback = clickCallback;
     }
 
@@ -53,8 +57,8 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder>
     public void onBindViewHolder(CharacterViewHolder holder, int position)
     {
         Log.d(this.getClass().getSimpleName(), "Binding position " + position);
-        ViewCompat.setTransitionName(holder.getBinding().characterImage,characters.get(position).getName());
         holder.getBinding().setCharacter(characters.get(position));
+        Picasso.with(context).load("file:///" + holder.getBinding().getCharacter().getImageUrl()).resize(160,160).centerCrop().into(holder.getBinding().characterImage);
         holder.getBinding().executePendingBindings();
     }
 

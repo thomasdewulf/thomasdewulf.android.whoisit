@@ -132,8 +132,6 @@ public class AddCharacterFragment extends DialogFragment
             }
             if (validation.validate() && hasValidPicture)
             {
-
-
                 Intent intent = new Intent();
                 intent.putExtra(INTENT_EXTRA_NAME, binding.characterName.getText().toString());
                 intent.putExtra(INTENT_EXTRA_DESCRIPTION, binding.characterDescription.getText().toString());
@@ -150,7 +148,6 @@ public class AddCharacterFragment extends DialogFragment
             return true;
         }
         return super.onOptionsItemSelected(item);
-
     }
 
     @Override
@@ -176,7 +173,6 @@ public class AddCharacterFragment extends DialogFragment
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
         // Save a file: path for use with ACTION_VIEW intents
         photoPath = image.getAbsolutePath();
         return image;
