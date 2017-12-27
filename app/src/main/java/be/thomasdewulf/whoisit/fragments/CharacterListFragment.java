@@ -5,6 +5,7 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -29,6 +30,7 @@ import be.thomasdewulf.whoisit.R;
 import be.thomasdewulf.whoisit.WhoIsItApplication;
 import be.thomasdewulf.whoisit.activities.MainActivity;
 import be.thomasdewulf.whoisit.adapters.CharacterAdapter;
+import be.thomasdewulf.whoisit.adapters.viewholders.CharacterViewHolder;
 import be.thomasdewulf.whoisit.databinding.FragmentCharachterListBinding;
 import be.thomasdewulf.whoisit.models.Character;
 import be.thomasdewulf.whoisit.ui.CharacterClickCallback;
@@ -118,6 +120,41 @@ public class CharacterListFragment extends Fragment
             {
                 adapter.remove(viewHolder.getAdapterPosition());
                 makeSnackbar(binding.addCharacterButton, "Karakter is verwijderd");
+            }
+
+            @Override
+            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState)
+            {
+                if(viewHolder != null)
+                {
+                    final View foregroundView = ((CharacterViewHolder)viewHolder).getBinding().viewForeground;
+                    getDefaultUIUtil().onSelected(foregroundView);
+                }
+            }
+
+            @Override
+            public void onChildDrawOver(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive)
+            {
+                final View foregroundView = ((CharacterViewHolder) viewHolder).getBinding().viewForeground;
+                getDefaultUIUtil().onDrawOver(c, recyclerView, foregroundView, dX, dY,
+                        actionState, isCurrentlyActive);
+            }
+
+            @Override
+            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder)
+            {
+                final View foregroundView = ((CharacterViewHolder) viewHolder).getBinding().viewForeground;
+                getDefaultUIUtil().clearView(foregroundView);
+
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive)
+            {
+                final View foregroundView = ((CharacterViewHolder) viewHolder).getBinding().viewForeground;
+
+                getDefaultUIUtil().onDraw(c, recyclerView, foregroundView, dX, dY,
+                        actionState, isCurrentlyActive);
             }
         };
 
