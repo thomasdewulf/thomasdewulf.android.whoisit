@@ -27,6 +27,14 @@ public class Character
     {
     }
 
+    public Character(int id, String name, String description, String imageUrl)
+    {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.imageUrl = imageUrl;
+    }
+
     public Character(String name, String description, String image)
     {
         this.name = name;

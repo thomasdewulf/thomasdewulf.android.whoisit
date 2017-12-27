@@ -45,6 +45,7 @@ public class DataRepository
     {
         return database.characterDao().getAll();
     }
+    public LiveData<Character> getCharacter(int id){return database.characterDao().findById(id);}
 
     public void insertCharacter(Character character)
     {

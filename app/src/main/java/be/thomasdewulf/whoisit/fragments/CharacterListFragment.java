@@ -193,7 +193,9 @@ public class CharacterListFragment extends Fragment
             String name = data.getExtras().getString(AddCharacterFragment.INTENT_EXTRA_NAME);
             String description = data.getExtras().getString(AddCharacterFragment.INTENT_EXTRA_DESCRIPTION);
             String path = data.getExtras().getString(AddCharacterFragment.INTENT_EXTRA_PHOTO);
+
             Character character = new Character(name, description, path);
+
 
             WhoIsItApplication app = (WhoIsItApplication) getActivity().getApplication();
             app.getRepository().insertCharacter(character);

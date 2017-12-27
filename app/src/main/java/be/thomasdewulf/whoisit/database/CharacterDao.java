@@ -26,6 +26,9 @@ public interface CharacterDao
     @Query("SELECT * FROM characters WHERE name LIKE :name LIMIT 1")
     Character findByName(String name);
 
+    @Query("SELECT * FROM characters WHERE id LIKE :id LIMIT 1")
+    LiveData<Character> findById(int id);
+
     @Insert
     void insertCharacters(Character... characters);
 

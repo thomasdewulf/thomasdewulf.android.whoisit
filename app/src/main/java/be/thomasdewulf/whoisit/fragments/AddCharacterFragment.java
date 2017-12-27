@@ -33,6 +33,7 @@ import java.util.Date;
 import be.thomasdewulf.whoisit.R;
 import be.thomasdewulf.whoisit.activities.MainActivity;
 import be.thomasdewulf.whoisit.databinding.FragmentAddCharacterBinding;
+import be.thomasdewulf.whoisit.models.Character;
 import be.thomasdewulf.whoisit.ui.AddCharacterImageCallback;
 
 import static android.app.Activity.RESULT_OK;
@@ -45,9 +46,11 @@ public class AddCharacterFragment extends DialogFragment
     public static final String INTENT_EXTRA_NAME = "intent_extra_name";
     public static final String INTENT_EXTRA_DESCRIPTION = "intent_extra_description";
     public static final String INTENT_EXTRA_PHOTO = "intent_extra_photo";
+    public static final String INTENT_EXTRA_ID = "intent_extra_id";
     private final int REQUEST_IMAGE_CAPTURE = 1;
     private FragmentAddCharacterBinding binding;
     private String photoPath;
+    private Character character;
     private final AddCharacterImageCallback characterImageCallback = () ->
     {
         File photoFile = null;
@@ -86,7 +89,14 @@ public class AddCharacterFragment extends DialogFragment
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_character, container, false);
         binding.setCallback(characterImageCallback);
+        if(character != null)
+        {
+            binding.characterName.setText(character.getName());
+            binding.characterDescription.setText(character.getDescription());
+            photoPath = character.getImageUrl();
+            loadImage(character.getImageUrl());
 
+        }
 
         MainActivity activity = (MainActivity) getActivity();
         activity.setSupportActionBar(binding.toolbar);
@@ -125,7 +135,7 @@ public class AddCharacterFragment extends DialogFragment
 
         if (id == R.id.action_save)
         {
-            //TODO: validation toevoegen
+
             if (!hasValidPicture)
             {
                 Toast.makeText(getContext(),"Er is nog geen foto toegevoegd", Toast.LENGTH_LONG).show();
@@ -136,6 +146,10 @@ public class AddCharacterFragment extends DialogFragment
                 intent.putExtra(INTENT_EXTRA_NAME, binding.characterName.getText().toString());
                 intent.putExtra(INTENT_EXTRA_DESCRIPTION, binding.characterDescription.getText().toString());
                 intent.putExtra(INTENT_EXTRA_PHOTO, photoPath);
+                if(character != null)
+                {
+                    intent.putExtra(INTENT_EXTRA_ID,character.getId());
+                }
                 getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
                 dismiss();
                 return true;
@@ -157,10 +171,16 @@ public class AddCharacterFragment extends DialogFragment
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
         {
             //Show image in imageview
-            Picasso.with(getContext()).load("file:///" + photoPath).fit().into(binding.imageView);
-            hasValidPicture = true;
+            loadImage(photoPath);
+
 
         }
+    }
+
+    private void loadImage(String url)
+    {
+        Picasso.with(getContext()).load("file:///" + url).fit().into(binding.imageView);
+        hasValidPicture = true;
     }
 
     private File createImageFile() throws IOException
@@ -176,5 +196,10 @@ public class AddCharacterFragment extends DialogFragment
         // Save a file: path for use with ACTION_VIEW intents
         photoPath = image.getAbsolutePath();
         return image;
+    }
+
+    public void setCharacter(Character character)
+    {
+        this.character = character;
     }
 }
