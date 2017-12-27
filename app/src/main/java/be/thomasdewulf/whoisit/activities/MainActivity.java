@@ -13,6 +13,9 @@ public class MainActivity extends AppCompatActivity
 {
 
     private final String TAG = "MainActivity";
+    private int masterId;
+    private int detailId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -20,21 +23,32 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setupIdsForReplacement();
         showListFragmentOnStart(savedInstanceState);
+
+    }
+
+    private void setupIdsForReplacement()
+    {
+        masterId = R.id.fragment_container;
+        detailId = R.id.fragment_container;
+
+        if(findViewById(R.id.master_dual) !=null)
+        {
+            masterId = R.id.master_dual;
+            detailId = R.id.detail_dual;
+        }
 
     }
 
     private void showListFragmentOnStart(Bundle savedInstanceState)
     {
-        /**Lijst fragment weergeven wanneer opstart*/
-        if (savedInstanceState == null)
-        {
-            CharacterListFragment listFragment = new CharacterListFragment();
+        CharacterListFragment listFragment = new CharacterListFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, listFragment, CharacterListFragment.TAG)
+                    .replace(masterId, listFragment, CharacterListFragment.TAG)
                     .commit();
-        }
+
     }
 
 
@@ -52,7 +66,7 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack("character")
-                .replace(R.id.fragment_container, detailFragment, null)
+                .replace(detailId, detailFragment, null)
                 .commit();
     }
 }
