@@ -52,6 +52,18 @@ public class DataRepository
        task.execute();
     }
 
+    public void deleteCharacter(Character character)
+    {
+        DeleteTask task = new DeleteTask(database,character);
+        task.execute();
+    }
+
+    public void updateCharacter(Character character)
+    {
+        UpdateTask task = new UpdateTask(database,character);
+        task.execute();
+    }
+
     private static class InsertTask extends AsyncTask<Void,Void,Void>
     {
         private final AppDatabase appDatabase;
@@ -68,6 +80,44 @@ public class DataRepository
         {
             appDatabase.characterDao().insertCharacters(character);
             return null;
+        }
+    }
+
+    private static class DeleteTask extends AsyncTask<Void,Void,Void>
+    {
+        private final AppDatabase database;
+        private final Character character;
+
+        public DeleteTask(AppDatabase database, Character character)
+        {
+            this.database = database;
+            this.character = character;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids)
+        {
+            database.characterDao().deleteCharachters(character);
+            return null;
+        }
+    }
+
+    private static class UpdateTask extends AsyncTask<Void, Void, Void>
+    {
+        private final AppDatabase database;
+        private final Character character;
+
+        public UpdateTask(AppDatabase database, Character character)
+        {
+            this.database = database;
+            this.character = character;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids)
+        {
+           database.characterDao().deleteCharachters(character);
+           return null;
         }
     }
 }

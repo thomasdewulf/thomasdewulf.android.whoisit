@@ -12,10 +12,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import be.thomasdewulf.whoisit.R;
+import be.thomasdewulf.whoisit.WhoIsItApplication;
 import be.thomasdewulf.whoisit.activities.MainActivity;
 import be.thomasdewulf.whoisit.databinding.FragmentDetailBinding;
 import be.thomasdewulf.whoisit.ui.viewmodel.SharedViewModel;
@@ -97,7 +99,10 @@ public class DetailFragment extends Fragment
         } else if(id == R.id.action_delete)
         {
             //TODO: delete
-
+            WhoIsItApplication app = (WhoIsItApplication) getActivity().getApplication();
+            app.getRepository().deleteCharacter(viewModel.getSelectedCharacter());
+            getActivity().onBackPressed();
+            Toast.makeText(getContext(), "Karakter werd definitief verwijderd", Toast.LENGTH_LONG).show();
             return true;
         }
 
