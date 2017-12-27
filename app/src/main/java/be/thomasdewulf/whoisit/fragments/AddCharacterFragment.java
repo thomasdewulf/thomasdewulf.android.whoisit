@@ -124,15 +124,18 @@ private final AddCharacterImageCallback characterImageCallback = () ->
         if(id == R.id.action_save)
         {
             //TODO: validation toevoegen
+if(validation.validate())
+{
 
-                Intent intent = new Intent();
-                intent.putExtra(INTENT_EXTRA_NAME, binding.characterName.getText().toString());
-                intent.putExtra(INTENT_EXTRA_DESCRIPTION, binding.characterDescription.getText().toString());
-                intent.putExtra(INTENT_EXTRA_PHOTO,photoPath);
-                getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
-                dismiss();
-                return true;
 
+    Intent intent = new Intent();
+    intent.putExtra(INTENT_EXTRA_NAME, binding.characterName.getText().toString());
+    intent.putExtra(INTENT_EXTRA_DESCRIPTION, binding.characterDescription.getText().toString());
+    intent.putExtra(INTENT_EXTRA_PHOTO, photoPath);
+    getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+    dismiss();
+    return true;
+}
 
         }
         else if(id == android.R.id.home)
