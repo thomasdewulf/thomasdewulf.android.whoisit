@@ -119,7 +119,7 @@ public class CharacterListFragment extends Fragment
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
             {
                 adapter.remove(viewHolder.getAdapterPosition());
-                makeSnackbar(binding.addCharacterButton, "Karakter is verwijderd");
+                makeSnackbar(binding.addCharacterButton, "Karakter is geëlimineerd");
             }
 
             @Override

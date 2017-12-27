@@ -13,4 +13,5 @@
     <string name="delete">Verwijderen</string>
     <string name="restart">Spel herstarten</string>
     <string name="restarted">Spel is herstart</string>
+    <string name="elimineren">Karakter elimineren</string>
 </resources>
