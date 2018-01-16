@@ -27,14 +27,16 @@ public class CharacterListViewModel extends AndroidViewModel
     private MediatorLiveData<List<Character>> characters;
 
 
+
+
     public CharacterListViewModel(Application application)
     {
         super(application);
         dataRepository = ((WhoIsItApplication) application).getRepository();
-        characters = new MediatorLiveData<>();
-        characters.setValue(null);
-        loadCharacters();
 
+            characters = new MediatorLiveData<>();
+            characters.setValue(null);
+            loadCharacters();
     }
 
     public MediatorLiveData<List<Character>> getCharacters()
@@ -47,10 +49,8 @@ public class CharacterListViewModel extends AndroidViewModel
     {
         LiveData<List<Character>> charactersLive = dataRepository.getCharacters();
         characters.addSource(charactersLive, characters::setValue);
+
     }
-
-
-
 
     /**
      * Custom factory is nodig. Android slaagt er anders niet in om een instantie van het viewmodel aan te maken
