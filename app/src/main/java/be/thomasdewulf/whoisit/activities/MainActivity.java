@@ -51,10 +51,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
-
-
-
     /**
      * Detail scherm van een karakter weergeven
      */
@@ -63,10 +59,19 @@ public class MainActivity extends AppCompatActivity
 
         DetailFragment detailFragment = new DetailFragment();
 
-        getSupportFragmentManager()
+       android.support.v4.app.FragmentTransaction transaction =  getSupportFragmentManager()
                 .beginTransaction()
-                .addToBackStack("character")
-                .replace(detailId, detailFragment, null)
-                .commit();
+                .replace(detailId, detailFragment, null);
+
+       if(masterId == R.id.fragment_container)
+       {
+           transaction.addToBackStack("character");
+       }
+       transaction.commit();
+
+
+
+
+
     }
 }

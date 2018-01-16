@@ -79,14 +79,18 @@ public class CharacterListFragment extends Fragment
         recyclerView.setAdapter(adapter);
 
         MainActivity activity = (MainActivity) getActivity();
+        if(binding.toolbar != null)
+        {
+            activity.setSupportActionBar(binding.toolbar);
+            setHasOptionsMenu(true);
+            setupFabListener();
+        }
 
-        activity.setSupportActionBar(binding.toolbar);
-        setHasOptionsMenu(true);
 
         setupAnimations(recyclerView);
         setupDivider(recyclerView);
         setupSwipeToDelete(recyclerView);
-        setupFabListener();
+
 
     }
 
@@ -118,6 +122,7 @@ public class CharacterListFragment extends Fragment
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
             {
+                //TODO: fix parent
                 adapter.remove(viewHolder.getAdapterPosition());
                 makeSnackbar(binding.addCharacterButton, "Karakter is geëlimineerd");
             }

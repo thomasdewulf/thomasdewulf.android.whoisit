@@ -69,12 +69,13 @@ private void observeUI()
         if(character != null)
         {
             binding.setCharacter(character);
-
-            Picasso.with(getContext())
-                    .load("file:////" + binding.getCharacter().getImageUrl())
-                    .fit()
-                    .into(binding.backdrop);
-
+if(binding.backdrop != null)
+{
+    Picasso.with(getContext())
+            .load("file:////" + binding.getCharacter().getImageUrl())
+            .fit()
+            .into(binding.backdrop);
+}
             setupUI(character);
         }
         //binding.executePendingBindings();
@@ -84,17 +85,22 @@ private void observeUI()
     private void setupUI(Character character)
     {
         MainActivity activity = (MainActivity) getActivity();
-        activity.setSupportActionBar(binding.toolbar);
-
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setTitle(character.getName());
-        binding.toolbar.setNavigationOnClickListener(v ->
+        if(binding.toolbar != null)
         {
-            activity.onBackPressed();
-        });
-        binding.collapsingToolbar.setTitle(character.getName());
+            activity.setSupportActionBar(binding.toolbar);
 
-        setHasOptionsMenu(true);
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            activity.getSupportActionBar().setTitle(character.getName());
+            binding.toolbar.setNavigationOnClickListener(v ->
+            {
+                activity.onBackPressed();
+            });
+            binding.collapsingToolbar.setTitle(character.getName());
+
+            setHasOptionsMenu(true);
+        }
+
+
 
     }
 
